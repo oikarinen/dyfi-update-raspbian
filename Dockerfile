@@ -8,6 +8,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
-RUN wget -O- https://www.dy.fi/files/dyfi-update-pl-1.2.0.tar.gz | tar xfz - 
+RUN wget -O/tmp/dyfi.tar.gz https://www.dy.fi/files/dyfi-update-pl-1.2.0.tar.gz 
+RUN [ "297aaf3f0056bc7d850a4ff2c9195177647bbad8ff10d03130315fb85111b1db  /tmp/dyfi.tar.gz" = "$(sha256sum /tmp/dyfi.tar.gz)" ]
+RUN tar xfz /tmp/dyfi.tar.gz
 COPY dyfi-update.conf /tmp/
 CMD /tmp/dyfi-update-pl-1.2.0/dyfi-update.pl -f /tmp/dyfi-update.conf
